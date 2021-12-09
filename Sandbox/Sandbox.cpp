@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <windows.h>
 #include <list>
+#include <conio.h.>
 
 enum  Type
 {
@@ -10,6 +11,20 @@ enum  Type
 	STONE = '@',
 	SANDSPAWNER = 'S',
 };
+
+int get_mouse_X()
+{
+	CONSOLE_SCREEN_BUFFER_INFO info_x;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info_x);
+	return info_x.dwCursorPosition.X;
+}
+
+int get_mouse_y()
+{
+	CONSOLE_SCREEN_BUFFER_INFO info_y;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info_y);
+	return info_y.dwCursorPosition.Y;
+}
 
 class Screen
 {
@@ -189,29 +204,24 @@ int main()
 	{
 		plane.set(60, i, SAND);
 	}*/
+
 	plane.set(60, 2, SANDSPAWNER);
 	plane.set(15, 2, SANDSPAWNER);
-	plane.set(45, 2, SANDSPAWNER);
+	plane.set(75, 2, SANDSPAWNER);
 
 
-
-	for (int i = 0; i < plane.get_w(); i++)
-		plane.set(i, plane.get_h() - 1, STONE);
 
 	while (true)
 	{
-
 		for (int i = 0; i < plane.get_w() - 1; i++)
 			for (int j = 0; j < plane.get_h() - 1; j++)
 			{
 				screen.set_pixel(i, j, (char)(plane.plane[i][j].type));
 			}
 		printf(screen.get());
-		Sleep(30);
+		Sleep(10);
 		screen.clear_screen();
 		plane.update();
-
 	}
-
 }
 
